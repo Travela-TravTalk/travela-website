@@ -121,9 +121,14 @@
     /* ── Hero ── */
     #hero {
       min-height: 100vh;
-      background: linear-gradient(145deg, #111111 0%, #1a1a1a 55%, #2a1200 100%);
+      background: url('opening background.jpg') center/cover no-repeat;
       position: relative; overflow: hidden;
       display: flex; flex-direction: column; justify-content: center;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.55);
     }
     .hero-shapes { position: absolute; inset: 0; pointer-events: none; }
     .hero-shape {
@@ -134,7 +139,7 @@
     .hs2 { width: 400px; height: 400px; bottom: -150px; left: -80px; }
     .hs3 { width: 200px; height: 200px; top: 40%; left: 45%; background: rgba(249,115,22,.10); }
     .hero-content {
-      position: relative; z-index: 1;
+      position: relative; z-index: 2;
       padding: 8rem 1.5rem 5rem;
       max-width: 1200px; margin: 0 auto; width: 100%;
       display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
@@ -303,7 +308,7 @@
       transition: background .25s; border: 2px solid transparent;
     }
     .feature-item:hover, .feature-item.active {
-      background: var(--white); border-color: var(--grey200);
+      background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.25);
       box-shadow: var(--shadow);
     }
     .feature-icon {
@@ -639,6 +644,73 @@
       .hero-actions { flex-direction: column; }
       .store-btns { flex-direction: column; }
     }
+
+    /* ── Hero placeholder image ── */
+    .hero-placeholder {
+      width: 100%; max-width: 480px;
+      aspect-ratio: 4/3;
+      background: rgba(255,255,255,.07);
+      border: 2px dashed rgba(255,255,255,.25);
+      border-radius: 24px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .75rem; color: rgba(255,255,255,.45);
+      font-size: .9rem; font-weight: 600;
+    }
+    .hero-placeholder svg { opacity: .4; }
+
+    /* ── Global / Open Globally section ── */
+    #global {
+      position: relative; overflow: hidden;
+      background: var(--black);
+    }
+    .global-img-placeholder {
+      width: 100%; height: 560px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a1200 60%, #1a0a00 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .global-img-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .global-placeholder-inner {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+      color: rgba(255,255,255,.3); font-size: .9rem; font-weight: 600;
+    }
+    .global-placeholder-inner svg { opacity: .3; }
+    .global-text-overlay {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(to top, rgba(0,0,0,.75) 0%, transparent 60%);
+    }
+    .global-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800; color: var(--white);
+      text-align: center; line-height: 1.1;
+    }
+    .global-headline em { color: var(--orange); font-style: normal; }
+    @media (max-width: 768px) {
+      .global-img-placeholder { height: 380px; }
+      .hero-placeholder { max-width: 100%; }
+    }
+
+    /* ── Bigger social icons ── */
+    .social-link-lg {
+      width: 52px; height: 52px; border-radius: 12px;
+      border: 1.5px solid var(--grey200);
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s; cursor: pointer;
+    }
+    .social-link-lg:hover { border-color: var(--orange); background: var(--orange); }
+    .social-link-lg svg { display: block; transition: fill .2s; }
+    .social-link-lg:hover svg { fill: white; }
   </style>
 </head>
 <body>
@@ -695,10 +767,10 @@
       <div class="hero-left">
         <div class="hero-badge"><span class="dot"></span> Meet Locals. Travel Authentically.</div>
         <h1 class="hero-title">
-          Travel Beyond<br>the <em>Tourist</em> Trail
+          Travela the world,<br>your <em>way.</em>
         </h1>
         <p class="hero-sub">
-          Travela connects travellers with real locals who open the door to hidden gems, cultural experiences, and genuine friendships — no tourist traps, ever.
+          Travela — the gateway to local experiences, connecting you with locals seamlessly and effortlessly.
         </p>
         <div class="hero-actions">
           <a href="#download" class="btn btn-primary">
@@ -710,254 +782,150 @@
             Google Play
           </a>
         </div>
-        <div class="hero-stats">
-          <div class="stat-item">
-            <div class="stat-num">🌍</div>
-            <div class="stat-label">Open Globally</div>
-          </div>
-        </div>
       </div>
       <div class="hero-right">
-        <div class="phone-wrap">
-          <div class="floating-badge fb1"><span class="fb-icon">🤝</span> Local matched!</div>
-          <div class="floating-badge fb2"><span class="fb-icon">📍</span> Bali, Indonesia</div>
-          <div class="phone-shell">
-            <div class="phone-orb"></div>
-            <div class="phone-screen">
-              <div class="phone-map">
-                <div class="map-grid"></div>
-                <div class="map-pin pin1">
-                  <div class="map-pin-dot">
-                    <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                  </div>
-                </div>
-                <div class="map-pin pin2">
-                  <div class="map-pin-dot" style="background:#111111;">
-                    <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                  </div>
-                </div>
-              </div>
-              <div class="phone-bottom">
-                <div class="phone-card">
-                  <div class="phone-card-title">Matched with Ayu 🌸</div>
-                  <div class="phone-card-sub">Bali Local · Food & Culture Guide</div>
-                  <div class="phone-card-row">
-                    <span style="font-size:.75rem;color:var(--grey500);">⭐ 4.9 · Meet today</span>
-                    <span class="pill-match">New Match</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <img src="Collage.png" alt="Travela experiences" style="width:100%;max-width:480px;border-radius:24px;box-shadow:var(--shadow-lg);" />
       </div>
     </div>
   </section>
 
-  <!-- ══ DESTINATIONS ══════════════════════════════════════ -->
-  <section id="destinations">
-    <div class="container">
-      <div class="dest-header fade-up">
-        <div class="section-label">Explore With Locals</div>
-        <h2 class="section-title">Where Will You Connect Next?</h2>
-        <p class="section-sub">From tropical islands to historic cities — find a local who calls it home and experience it the way they do.</p>
+  <!-- ══ GLOBAL ════════════════════════════════════════════ -->
+  <section id="global">
+    <div class="global-img-placeholder" style="background-image:url('Pink mountain.jpg');background-size:cover;background-position:center;">
+      <div class="global-text-overlay">
+        <h2 class="global-headline fade-up">Open <em>Globally,</em><br>For Everyone.</h2>
       </div>
-      <div class="dest-grid">
-        <div class="dest-card large fade-up">
-          <div class="dest-img bg-bali"><div class="dest-art">🏝️</div></div>
-          <div class="dest-overlay"></div>
-          <div class="dest-info">
-            <div class="dest-country">Indonesia</div>
-            <div class="dest-name">Bali</div>
-            <div class="dest-meta">
-              <span class="dest-rating">🤝 Locals available</span>
-            </div>
+    </div>
+  </section>
+
+  <!-- ══ MEET THE TEAM ════════════════════════════════════ -->
+  <section id="team" style="padding:5rem 0;background:url('cappadocia.jpg') center/cover no-repeat;position:relative;">
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);"></div>
+    <div class="container">
+      <div class="fade-up" style="text-align:center;margin-bottom:3rem;position:relative;z-index:1;">
+        <div class="section-label">The People Behind Travela</div>
+        <h2 class="section-title" style="margin:0 auto;color:var(--white);">Meet the Team</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;max-width:720px;margin:0 auto;position:relative;z-index:1;">
+
+        <!-- Co-founder 1 -->
+        <div class="fade-up" style="text-align:center;background:rgba(255,255,255,0.12);backdrop-filter:blur(10px);border-radius:20px;padding:2.5rem 2rem;border:1px solid rgba(255,255,255,0.2);">
+          <div style="width:100px;height:100px;border-radius:50%;background:var(--grey200);margin:0 auto 1.25rem;display:flex;align-items:center;justify-content:center;border:2px dashed var(--grey500);">
+            <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="#94a3b8" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+            </svg>
           </div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:800;color:var(--white);margin-bottom:.25rem;">Asher Ethan Koh</div>
+          <div style="font-size:.85rem;color:var(--orange);font-weight:600;">Co-Founder</div>
         </div>
-        <div class="dest-card fade-up">
-          <div class="dest-img bg-paris"><div class="dest-art">🗼</div></div>
-          <div class="dest-overlay"></div>
-          <div class="dest-info">
-            <div class="dest-country">France</div>
-            <div class="dest-name">Paris</div>
-            <div class="dest-meta">
-              <span class="dest-rating">🤝 Locals available</span>
-            </div>
+
+        <!-- Co-founder 2 -->
+        <div class="fade-up" style="text-align:center;background:rgba(255,255,255,0.12);backdrop-filter:blur(10px);border-radius:20px;padding:2.5rem 2rem;border:1px solid rgba(255,255,255,0.2);">
+          <div style="width:100px;height:100px;border-radius:50%;background:var(--grey200);margin:0 auto 1.25rem;display:flex;align-items:center;justify-content:center;border:2px dashed var(--grey500);">
+            <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="#94a3b8" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+            </svg>
           </div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:800;color:var(--white);margin-bottom:.25rem;">Ryann Tay</div>
+          <div style="font-size:.85rem;color:var(--orange);font-weight:600;">Co-Founder</div>
         </div>
-        <div class="dest-card fade-up">
-          <div class="dest-img bg-tokyo"><div class="dest-art">⛩️</div></div>
-          <div class="dest-overlay"></div>
-          <div class="dest-info">
-            <div class="dest-country">Japan</div>
-            <div class="dest-name">Tokyo</div>
-            <div class="dest-meta">
-              <span class="dest-rating">🤝 Locals available</span>
-            </div>
-          </div>
-        </div>
-        <div class="dest-card fade-up">
-          <div class="dest-img bg-maldives"><div class="dest-art">🤿</div></div>
-          <div class="dest-overlay"></div>
-          <div class="dest-info">
-            <div class="dest-country">Maldives</div>
-            <div class="dest-name">Malé Atoll</div>
-            <div class="dest-meta">
-              <span class="dest-rating">🤝 Locals available</span>
-            </div>
-          </div>
-        </div>
-        <div class="dest-card fade-up">
-          <div class="dest-img bg-rome"><div class="dest-art">🏛️</div></div>
-          <div class="dest-overlay"></div>
-          <div class="dest-info">
-            <div class="dest-country">Italy</div>
-            <div class="dest-name">Rome</div>
-            <div class="dest-meta">
-              <span class="dest-rating">🤝 Locals available</span>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   </section>
 
   <!-- ══ FEATURES ══════════════════════════════════════════ -->
-  <section id="features">
-    <div class="container">
-      <div class="features-grid">
+  <section id="features" style="position:relative;background:url('flower field.png') center/cover no-repeat;">
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="fade-up" style="margin-bottom:2.5rem;">
+        <div class="section-label">Why Travela</div>
+        <h2 class="section-title" style="color:var(--white);">Everything You Need for Authentic Travel</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.75);">Built for curious explorers — Travela bridges the gap between travellers and locals worldwide.</p>
+      </div>
+      <div class="fade-up" style="margin-bottom:3rem;">
+        <img src="Interface.png" alt="Travela app interface" style="width:100%;border-radius:20px;box-shadow:var(--shadow-lg);display:block;" />
+      </div>
+      <div class="features-grid" style="grid-template-columns:1fr;">
         <div>
-          <div class="fade-up">
-            <div class="section-label">Why Travela</div>
-            <h2 class="section-title">Everything You Need for Authentic Travel</h2>
-            <p class="section-sub">Built for curious explorers — Travela bridges the gap between travellers and locals worldwide.</p>
-          </div>
           <div class="feature-list">
             <div class="feature-item active fade-up">
               <div class="feature-icon">🤝</div>
               <div>
-                <div class="feature-text-title">Smart Local Matching</div>
-                <div class="feature-text-desc">Our algorithm matches you with verified locals who share your interests, travel style, and curiosity.</div>
+                <div class="feature-text-title" style="color:var(--white);">Smart Local Matching</div>
+                <div class="feature-text-desc" style="color:rgba(255,255,255,0.7);">Our algorithm matches you with verified locals who share your interests, travel style, and curiosity.</div>
               </div>
             </div>
             <div class="feature-item fade-up">
               <div class="feature-icon">✨</div>
               <div>
-                <div class="feature-text-title">Authentic Experiences</div>
-                <div class="feature-text-desc">Discover hidden restaurants, secret viewpoints, and off-the-beaten-path adventures only locals know about.</div>
+                <div class="feature-text-title" style="color:var(--white);">Authentic Experiences</div>
+                <div class="feature-text-desc" style="color:rgba(255,255,255,0.7);">Discover hidden restaurants, secret viewpoints, and off-the-beaten-path adventures only locals know about.</div>
               </div>
             </div>
             <div class="feature-item fade-up">
               <div class="feature-icon">💬</div>
               <div>
-                <div class="feature-text-title">In-App Messaging</div>
-                <div class="feature-text-desc">Chat safely with your local match before you meet — plan your experience with complete confidence.</div>
+                <div class="feature-text-title" style="color:var(--white);">In-App Messaging</div>
+                <div class="feature-text-desc" style="color:rgba(255,255,255,0.7);">Chat safely with your local match before you meet — plan your experience with complete confidence.</div>
               </div>
             </div>
             <div class="feature-item fade-up">
               <div class="feature-icon">🛡️</div>
               <div>
-                <div class="feature-text-title">Verified & Safe</div>
-                <div class="feature-text-desc">Every local profile is verified with ID checks, reviews, and a community trust score so you always feel secure.</div>
+                <div class="feature-text-title" style="color:var(--white);">Verified & Safe</div>
+                <div class="feature-text-desc" style="color:rgba(255,255,255,0.7);">Every local profile is verified with ID checks, reviews, and a community trust score so you always feel secure.</div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="feature-visual fade-up">
-          <div class="feature-phone">
-            <div class="feature-screen">
-              <div class="app-header-bar">
-                <div>
-                  <div class="app-greeting">Good morning,</div>
-                  <div class="app-username">Alex 🌍</div>
-                </div>
-                <div class="app-avatar">👤</div>
-              </div>
-              <div class="search-bar">
-                <span>🔍</span>
-                <span>Find a local in…</span>
-              </div>
-              <div style="font-size:.65rem;font-weight:700;color:var(--grey500);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;">Your Matches</div>
-              <div class="mini-card">
-                <div class="mini-card-row">
-                  <div class="mini-thumb mini-thumb-1">🌸</div>
-                  <div class="mini-info">
-                    <div class="mini-name">Ayu · Bali, Indonesia</div>
-                    <div class="mini-date">Food, Culture & Hidden Temples</div>
-                  </div>
-                  <div class="mini-tag">New</div>
-                </div>
-              </div>
-              <div class="mini-card">
-                <div class="mini-card-row">
-                  <div class="mini-thumb mini-thumb-2">🎌</div>
-                  <div class="mini-info">
-                    <div class="mini-name">Kenji · Tokyo, Japan</div>
-                    <div class="mini-date">Street Food & Nightlife</div>
-                  </div>
-                  <div class="mini-tag">⭐ 4.9</div>
-                </div>
-              </div>
-              <div class="mini-card">
-                <div class="mini-card-row">
-                  <div class="mini-thumb mini-thumb-3">🍕</div>
-                  <div class="mini-info">
-                    <div class="mini-name">Marco · Rome, Italy</div>
-                    <div class="mini-date">History, Art & Local Cuisine</div>
-                  </div>
-                  <div class="mini-tag">⭐ 5.0</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="feature-tag ft1">🤝 Local matched!</div>
-          <div class="feature-tag ft2">⭐ Verified profile</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ══ HOW IT WORKS ══════════════════════════════════════ -->
-  <section id="how-it-works">
-    <div class="container">
+  <section id="how-it-works" style="position:relative;background:url('Window city.jpg') center/cover no-repeat;">
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);"></div>
+    <div class="container" style="position:relative;z-index:1;">
       <div class="hiw-header fade-up">
         <div class="section-label">Simple Process</div>
-        <h2 class="section-title">Meet a Local in 4 Simple Steps</h2>
-        <p class="section-sub">From curiosity to connection — Travela guides you every step of the way.</p>
+        <h2 class="section-title" style="color:var(--white);">Meet a Local in 4 Simple Steps</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.75);">From curiosity to connection — Travela guides you every step of the way.</p>
       </div>
       <div class="steps-grid">
         <div class="step-card fade-up">
           <div class="step-num-wrap">👤</div>
-          <div class="step-title">Create Your Profile</div>
-          <p class="step-desc">Tell us your travel style, interests, and upcoming destinations so we can find your perfect local match.</p>
+          <div class="step-title" style="color:var(--white);">Create Your Profile</div>
+          <p class="step-desc" style="color:rgba(255,255,255,0.7);">Tell us your travel style, interests, and upcoming destinations so we can find your perfect local match.</p>
         </div>
         <div class="step-card fade-up">
           <div class="step-num-wrap">🔍</div>
-          <div class="step-title">Discover Locals</div>
-          <p class="step-desc">Browse verified local profiles in your destination. Filter by interests, languages, and experience type.</p>
+          <div class="step-title" style="color:var(--white);">Discover Locals</div>
+          <p class="step-desc" style="color:rgba(255,255,255,0.7);">Browse verified local profiles in your destination. Filter by interests, languages, and experience type.</p>
         </div>
         <div class="step-card fade-up">
           <div class="step-num-wrap">💬</div>
-          <div class="step-title">Connect & Chat</div>
-          <p class="step-desc">Match with a local you vibe with and plan your experience together through secure in-app messaging.</p>
+          <div class="step-title" style="color:var(--white);">Connect & Chat</div>
+          <p class="step-desc" style="color:rgba(255,255,255,0.7);">Match with a local you vibe with and plan your experience together through secure in-app messaging.</p>
         </div>
         <div class="step-card fade-up">
           <div class="step-num-wrap">🌍</div>
-          <div class="step-title">Meet & Explore</div>
-          <p class="step-desc">Meet up and discover the destination through a local's eyes — the real version no guidebook ever captures.</p>
+          <div class="step-title" style="color:var(--white);">Meet & Explore</div>
+          <p class="step-desc" style="color:rgba(255,255,255,0.7);">Meet up and discover the destination through a local's eyes — the real version no guidebook ever captures.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ══ APP DOWNLOAD ══════════════════════════════════════ -->
-  <section id="download">
-    <div class="container">
+  <section id="download" style="position:relative;background:url('neon lights.jpg') center/cover no-repeat;">
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.6);"></div>
+    <div class="container" style="position:relative;z-index:1;">
       <div class="dl-inner">
         <div class="dl-text fade-up">
           <div class="section-label">Download Now</div>
-          <h2 class="section-title">Start Your Authentic Journey</h2>
-          <p class="section-sub">Join travellers worldwide who are ditching tourist traps and connecting with real locals through Travela. Free to download — always.</p>
+          <h2 class="section-title" style="color:var(--white);">Start Your Authentic Journey</h2>
+          <p class="section-sub" style="color:rgba(255,255,255,0.75);">Join travellers worldwide who are ditching tourist traps and connecting with real locals through Travela. Free to download — always.</p>
           <div class="store-btns">
             <div class="store-btn">
               <!-- Apple logo -->
@@ -1005,14 +973,15 @@
   </section>
 
   <!-- ══ CONTACT ════════════════════════════════════════════ -->
-  <section id="contact">
-    <div class="container">
+  <section id="contact" style="position:relative;background:url('warm lights.jpg') center/cover no-repeat;">
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.6);"></div>
+    <div class="container" style="position:relative;z-index:1;">
       <div class="contact-grid">
         <div class="contact-info fade-up">
           <div>
             <div class="section-label">Get in Touch</div>
-            <h2 class="section-title">We'd Love to Hear from You</h2>
-            <p class="section-sub">Have a question, partnership idea, or just want to say hello? Our team is available 7 days a week.</p>
+            <h2 class="section-title" style="color:var(--white);">We'd Love to Hear from You</h2>
+            <p class="section-sub" style="color:rgba(255,255,255,0.75);">Have a question, partnership idea, or just want to say hello? Our team is available 7 days a week.</p>
           </div>
           <div class="contact-methods">
             <div class="contact-method cm1">
@@ -1023,23 +992,15 @@
                 <div class="cm-sub">We reply within 24 hours</div>
               </div>
             </div>
-            <div class="contact-method cm2">
-              <div class="cm-icon">📞</div>
-              <div>
-                <div class="cm-label">Call Us</div>
-                <div class="cm-value">+65 6123 4567</div>
-                <div class="cm-sub">Mon–Fri, 9 AM – 6 PM SGT</div>
-              </div>
-            </div>
           </div>
           <div>
-            <div style="font-size:.8rem;font-weight:700;color:var(--grey700);margin-bottom:.75rem;">Follow Our Journey</div>
+            <div style="font-size:.8rem;font-weight:700;color:rgba(255,255,255,0.75);margin-bottom:.75rem;">Follow Our Journey</div>
             <div class="contact-social">
-              <div class="social-link" title="TikTok">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="#64748b"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.67a8.18 8.18 0 0 0 4.83 1.55V6.78a4.85 4.85 0 0 1-1.06-.09z"/></svg>
+              <div class="social-link-lg" style="border-color:rgba(255,255,255,0.25);" title="TikTok">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="rgba(255,255,255,0.75)"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.67a8.18 8.18 0 0 0 4.83 1.55V6.78a4.85 4.85 0 0 1-1.06-.09z"/></svg>
               </div>
-              <div class="social-link" title="Instagram">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="#64748b"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+              <div class="social-link-lg" style="border-color:rgba(255,255,255,0.25);" title="Instagram">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="rgba(255,255,255,0.75)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
               </div>
             </div>
           </div>
@@ -1084,80 +1045,6 @@
     </div>
   </section>
 
-  <!-- ══ NEWSLETTER ═════════════════════════════════════════ -->
-  <section id="newsletter">
-    <div class="container">
-      <div class="nl-inner fade-up">
-        <div class="section-label">Stay in the Loop</div>
-        <h2 class="section-title">Get Insider Travel Stories</h2>
-        <p>Weekly spotlights on local experiences, traveller stories, and destination guides from people who actually live there.</p>
-        <form class="nl-form" id="newsletterForm">
-          <input class="nl-input" type="email" placeholder="your@email.com" required />
-          <button type="submit" class="nl-btn">Subscribe</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ FOOTER ═════════════════════════════════════════════ -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="nav-logo" style="margin-bottom:1rem;">
-            <img src="LOGO.png" alt="Travela logo" style="height:40px;width:auto;flex-shrink:0;" />
-            <span class="logo-name" style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:800;color:var(--white);">Travel<span class="logo-accent">a</span></span>
-          </div>
-          <p>Travela connects curious travellers with locals across the world, bridging the gap between tourism and authentic human connection.</p>
-          <div class="contact-social">
-            <div class="social-link" style="border-color:rgba(255,255,255,.12);" title="TikTok">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="rgba(255,255,255,0.55)"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.67a8.18 8.18 0 0 0 4.83 1.55V6.78a4.85 4.85 0 0 1-1.06-.09z"/></svg>
-            </div>
-            <div class="social-link" style="border-color:rgba(255,255,255,.12);" title="Instagram">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="rgba(255,255,255,0.55)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="footer-col-title">Product</div>
-          <ul class="footer-links">
-            <li><a href="#destinations">Destinations</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#download">Download App</a></li>
-          </ul>
-        </div>
-        <div>
-          <div class="footer-col-title">Company</div>
-          <ul class="footer-links">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Press Kit</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-        <div>
-          <div class="footer-col-title">Support</div>
-          <ul class="footer-links">
-            <li><a href="#">Help Centre</a></li>
-            <li><a href="#">Safety Tips</a></li>
-            <li><a href="#">Community Guidelines</a></li>
-            <li><a href="#">Become a Local</a></li>
-            <li><a href="#">Partner With Us</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2025 Travela Pte. Ltd. All rights reserved.</p>
-        <div class="footer-legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Cookie Settings</a>
-        </div>
-      </div>
-    </div>
-  </footer>
 
   <script>
     const navbar = document.getElementById('navbar');
@@ -1206,12 +1093,6 @@
       setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; e.target.reset(); }, 3000);
     });
 
-    document.getElementById('newsletterForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const btn = e.target.querySelector('.nl-btn');
-      btn.textContent = '✓ Subscribed!';
-      setTimeout(() => { btn.textContent = 'Subscribe'; e.target.reset(); }, 3000);
-    });
   </script>
 </body>
 </html>

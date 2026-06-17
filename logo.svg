@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 340">
+  <g transform="translate(138, 128) rotate(22)">
+    <!-- Body: top semicircle -->
+    <path d="M -88 0 A 88 84 0 0 1 88 0 Z" fill="#F5AA7C"/>
+    <!-- Tentacles -->
+    <rect x="-74" y="-4" width="24" height="122" rx="12" fill="#F0A030"/>
+    <rect x="-38" y="-4" width="24" height="138" rx="12" fill="#F0A030"/>
+    <rect x="0"   y="-4" width="24" height="130" rx="12" fill="#F0A030"/>
+    <rect x="38"  y="-4" width="24" height="114" rx="12" fill="#F0A030"/>
+    <!-- Left eye: ">" shape -->
+    <path d="M -52 -46 L -32 -34 L -52 -22" stroke="#111111" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- Right eye: "v" shape -->
+    <path d="M -16 -60 L 2 -42 L 20 -60" stroke="#111111" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+</svg>

@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travela — Meet Locals, Travel Authentically</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange:     #f97316;
+      --orange-dark:#c2410c;
+      --black:      #111111;
+      --black-soft: #1a1a1a;
+      --white:      #ffffff;
+      --grey50:     #f8fafc;
+      --grey100:    #f1f5f9;
+      --grey200:    #e2e8f0;
+      --grey500:    #64748b;
+      --grey700:    #334155;
+      --grey900:    #0f172a;
+      --shadow:     0 4px 24px rgba(0,0,0,.10);
+      --shadow-lg:  0 20px 60px rgba(0,0,0,.18);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Quicksand', sans-serif;
+      color: var(--grey900);
+      background: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ── Utility ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .75rem 1.75rem; border-radius: 50px;
+      font-weight: 700; font-size: .95rem; cursor: pointer;
+      transition: all .25s ease; border: 2px solid transparent;
+      white-space: nowrap; font-family: 'Quicksand', sans-serif;
+    }
+    .btn-primary {
+      background: var(--orange); color: var(--white);
+      box-shadow: 0 4px 20px rgba(249,115,22,.35);
+    }
+    .btn-primary:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(249,115,22,.45); }
+    .btn-outline {
+      background: transparent; color: var(--white);
+      border-color: rgba(255,255,255,.6);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,.12); }
+    .section-label {
+      font-size: .8rem; font-weight: 700; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--orange);
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; line-height: 1.15;
+      color: var(--black); margin: .5rem 0 1rem;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--grey500); max-width: 560px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      padding: 1.1rem 0;
+      transition: background .35s, box-shadow .35s, padding .35s;
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(0,0,0,.10);
+      padding: .75rem 0;
+    }
+    nav.scrolled .nav-logo { color: var(--black); }
+    nav.scrolled .nav-links a { color: var(--grey700); }
+    nav.scrolled .nav-links a:hover { color: var(--orange); }
+    nav.scrolled .btn-outline {
+      color: var(--black); border-color: var(--grey200);
+    }
+    nav.scrolled .btn-outline:hover { background: var(--grey100); }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 800;
+      color: var(--white); letter-spacing: -.02em;
+      display: flex; align-items: center; gap: .55rem;
+    }
+    .logo-name { white-space: nowrap; }
+    .logo-accent { color: var(--orange); }
+    nav.scrolled .logo-accent { color: var(--orange); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      font-size: .9rem; font-weight: 600; color: rgba(255,255,255,.85);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { display: flex; align-items: center; gap: .75rem; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: .25rem;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--white); border-radius: 2px; transition: all .3s;
+    }
+    nav.scrolled .hamburger span { background: var(--black); }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #111111 0%, #1a1a1a 55%, #2a1200 100%);
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .hero-shapes { position: absolute; inset: 0; pointer-events: none; }
+    .hero-shape {
+      position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,.03);
+    }
+    .hs1 { width: 600px; height: 600px; top: -200px; right: -100px; }
+    .hs2 { width: 400px; height: 400px; bottom: -150px; left: -80px; }
+    .hs3 { width: 200px; height: 200px; top: 40%; left: 45%; background: rgba(249,115,22,.10); }
+    .hero-content {
+      position: relative; z-index: 1;
+      padding: 8rem 1.5rem 5rem;
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .hero-left { color: var(--white); }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.18);
+      border-radius: 50px; padding: .4rem 1rem; font-size: .8rem;
+      font-weight: 600; color: rgba(255,255,255,.9);
+      backdrop-filter: blur(8px); margin-bottom: 1.5rem;
+    }
+    .hero-badge .dot { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      font-weight: 800; line-height: 1.1; margin-bottom: 1.25rem;
+    }
+    .hero-title em { color: var(--orange); font-style: normal; }
+    .hero-sub {
+      font-size: 1.1rem; color: rgba(255,255,255,.72); margin-bottom: 2.5rem;
+      max-width: 440px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
+    .hero-stats {
+      display: flex; gap: 2.5rem; padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .stat-num {
+      font-size: 1.6rem; font-weight: 700; color: var(--white);
+    }
+    .stat-label { font-size: .8rem; color: rgba(255,255,255,.55); font-weight: 500; }
+
+    /* Hero Phone Mockup */
+    .hero-right { display: flex; justify-content: center; align-items: center; }
+    .phone-wrap {
+      position: relative; width: 280px;
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+    .phone-shell {
+      background: var(--black); border-radius: 36px;
+      padding: 12px; box-shadow: var(--shadow-lg), 0 0 0 2px rgba(255,255,255,.08);
+      position: relative;
+    }
+    .phone-screen {
+      background: linear-gradient(160deg, var(--orange) 0%, var(--orange-dark) 100%);
+      border-radius: 28px; overflow: hidden; height: 480px;
+      display: flex; flex-direction: column;
+    }
+    .phone-map {
+      flex: 1;
+      background: linear-gradient(135deg, #c2410c 0%, #7c2d12 40%, #3f1a08 100%);
+      position: relative; overflow: hidden;
+    }
+    .map-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .map-pin {
+      position: absolute; display: flex; flex-direction: column; align-items: center;
+    }
+    .map-pin::after {
+      content: ''; width: 2px; height: 20px;
+      background: rgba(255,255,255,.5);
+    }
+    .map-pin-dot {
+      width: 36px; height: 36px; border-radius: 50% 50% 50% 0;
+      background: var(--orange); transform: rotate(-45deg);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(249,115,22,.5);
+    }
+    .map-pin-dot svg { transform: rotate(45deg); }
+    .pin1 { top: 30%; left: 35%; }
+    .pin2 { top: 55%; right: 25%; }
+    .phone-bottom {
+      padding: 1rem; background: rgba(255,255,255,.96); border-radius: 0 0 28px 28px;
+    }
+    .phone-card {
+      background: var(--white); border-radius: 16px; padding: 1rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,.12);
+    }
+    .phone-card-title { font-size: .75rem; font-weight: 700; color: var(--grey900); }
+    .phone-card-sub { font-size: .65rem; color: var(--grey500); margin-bottom: .5rem; }
+    .phone-card-row { display: flex; align-items: center; justify-content: space-between; }
+    .pill-match {
+      font-size: .6rem; font-weight: 700; background: #fff7ed; color: var(--orange-dark);
+      border-radius: 50px; padding: .2rem .6rem; border: 1px solid rgba(249,115,22,.2);
+    }
+    .phone-orb {
+      position: absolute; width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,.2), transparent);
+      top: -60px; right: -60px;
+    }
+    .floating-badge {
+      position: absolute; background: var(--white); border-radius: 16px;
+      padding: .6rem .9rem; box-shadow: var(--shadow);
+      font-size: .75rem; font-weight: 700; color: var(--grey900);
+      display: flex; align-items: center; gap: .4rem;
+      animation: float 4s ease-in-out infinite;
+    }
+    .fb1 { top: 15%; left: -60px; animation-delay: -.5s; }
+    .fb2 { bottom: 30%; right: -55px; animation-delay: -2s; }
+    .fb-icon { font-size: 1.1rem; }
+
+    /* ── Destinations ── */
+    #destinations { padding: 6rem 0; background: var(--white); }
+    .dest-header { text-align: center; margin-bottom: 3rem; }
+    .dest-header .section-sub { margin: 0 auto; }
+    .dest-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+    }
+    .dest-card {
+      border-radius: 20px; overflow: hidden; position: relative;
+      height: 320px; cursor: pointer;
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .dest-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+    .dest-card.large { grid-row: span 2; height: auto; }
+    .dest-img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .dest-card:hover .dest-img { transform: scale(1.06); }
+    .dest-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.80) 0%, transparent 55%);
+    }
+    .dest-info {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem;
+    }
+    .dest-country {
+      font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.65);
+    }
+    .dest-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--white); margin: .2rem 0; }
+    .dest-meta { display: flex; align-items: center; gap: .75rem; }
+    .dest-rating { font-size: .8rem; color: rgba(255,255,255,.75); }
+
+    /* Destination card backgrounds */
+    .bg-bali    { background: linear-gradient(145deg, #f97316 0%, #7c2d12 100%); }
+    .bg-paris   { background: linear-gradient(145deg, #1a1a1a 0%, #3f3f3f 100%); }
+    .bg-tokyo   { background: linear-gradient(145deg, #f59e0b 0%, #b45309 100%); }
+    .bg-maldives{ background: linear-gradient(145deg, #c2410c 0%, #7c2d12 100%); }
+    .bg-rome    { background: linear-gradient(145deg, #292929 0%, #1a1a1a 100%); }
+    .dest-art {
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; opacity: .65;
+    }
+
+    /* ── Features ── */
+    #features { padding: 6rem 0; background: var(--grey50); }
+    .features-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .feature-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+    .feature-item {
+      display: flex; gap: 1.25rem; align-items: flex-start;
+      padding: 1.25rem; border-radius: 16px; cursor: pointer;
+      transition: background .25s; border: 2px solid transparent;
+    }
+    .feature-item:hover, .feature-item.active {
+      background: var(--white); border-color: var(--grey200);
+      box-shadow: var(--shadow);
+    }
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0;
+    }
+    .feature-item:nth-child(2) .feature-icon { background: linear-gradient(135deg, #1a1a1a, #3f3f3f); }
+    .feature-item:nth-child(3) .feature-icon { background: linear-gradient(135deg, #f59e0b, #b45309); }
+    .feature-item:nth-child(4) .feature-icon { background: linear-gradient(135deg, #111111, #292929); }
+    .feature-text-title { font-size: 1rem; font-weight: 700; color: var(--grey900); margin-bottom: .25rem; }
+    .feature-text-desc { font-size: .9rem; color: var(--grey500); }
+    .feature-visual {
+      position: relative; display: flex; justify-content: center;
+    }
+    .feature-phone {
+      width: 240px; background: var(--black); border-radius: 36px;
+      padding: 10px; box-shadow: var(--shadow-lg);
+    }
+    .feature-screen {
+      background: var(--grey50); border-radius: 28px; overflow: hidden;
+      height: 420px; padding: 1.25rem;
+    }
+    .app-header-bar {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;
+    }
+    .app-greeting { font-size: .7rem; color: var(--grey500); font-weight: 500; }
+    .app-username { font-size: .85rem; font-weight: 700; color: var(--grey900); }
+    .app-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      display: flex; align-items: center; justify-content: center; font-size: .85rem;
+    }
+    .search-bar {
+      background: var(--white); border-radius: 12px; padding: .6rem .85rem;
+      display: flex; align-items: center; gap: .5rem; margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    }
+    .search-bar span { font-size: .7rem; color: var(--grey500); }
+    .mini-card {
+      background: var(--white); border-radius: 14px; padding: .85rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,.07); margin-bottom: .75rem;
+    }
+    .mini-card-row { display: flex; gap: .75rem; align-items: center; }
+    .mini-thumb {
+      width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+    }
+    .mini-thumb-1 { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); }
+    .mini-thumb-2 { background: linear-gradient(135deg, #1a1a1a, #3f3f3f); }
+    .mini-thumb-3 { background: linear-gradient(135deg, #f59e0b, #b45309); }
+    .mini-info { flex: 1; }
+    .mini-name { font-size: .7rem; font-weight: 700; color: var(--grey900); }
+    .mini-date { font-size: .6rem; color: var(--grey500); }
+    .mini-tag {
+      font-size: .6rem; font-weight: 700; background: #fff7ed; color: var(--orange-dark);
+      border-radius: 50px; padding: .15rem .5rem; white-space: nowrap;
+    }
+    .feature-tag {
+      position: absolute; background: var(--white); border-radius: 12px;
+      padding: .5rem .85rem; font-size: .7rem; font-weight: 700;
+      box-shadow: var(--shadow); white-space: nowrap;
+    }
+    .ft1 { top: 10%; right: -20px; color: var(--orange); }
+    .ft2 { bottom: 20%; left: -20px; color: var(--black); }
+
+    /* ── How It Works ── */
+    #how-it-works { padding: 6rem 0; background: var(--white); }
+    .hiw-header { text-align: center; margin-bottom: 4rem; }
+    .hiw-header .section-sub { margin: 0 auto; }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem; position: relative;
+    }
+    .steps-grid::before {
+      content: ''; position: absolute; top: 40px; left: calc(12.5% + 20px);
+      right: calc(12.5% + 20px); height: 2px;
+      background: linear-gradient(90deg, var(--orange), var(--black));
+      z-index: 0;
+    }
+    .step-card {
+      text-align: center; padding: 2rem 1.25rem;
+      border-radius: 20px; position: relative; z-index: 1;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .step-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .step-num-wrap {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--white); box-shadow: 0 4px 16px rgba(0,0,0,.12);
+      border: 3px solid var(--orange);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem; font-size: 1.75rem; position: relative;
+    }
+    .step-card:nth-child(2) .step-num-wrap { border-color: var(--orange-dark); }
+    .step-card:nth-child(3) .step-num-wrap { border-color: var(--black-soft); }
+    .step-card:nth-child(4) .step-num-wrap { border-color: var(--black); }
+    .step-title { font-size: 1rem; font-weight: 700; color: var(--grey900); margin-bottom: .5rem; }
+    .step-desc { font-size: .85rem; color: var(--grey500); }
+
+    /* ── App Download ── */
+    #download { padding: 6rem 0; background: var(--grey50); }
+    .dl-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .dl-text .section-sub { margin-bottom: 2rem; }
+    .store-btns { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .store-btn {
+      display: flex; align-items: center; gap: .85rem;
+      background: var(--black); color: var(--white);
+      border-radius: 14px; padding: .85rem 1.5rem;
+      transition: transform .25s, box-shadow .25s; cursor: pointer;
+    }
+    .store-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.22); background: var(--black-soft); }
+    .store-icon-svg { flex-shrink: 0; }
+    .store-label { font-size: .65rem; color: rgba(255,255,255,.65); }
+    .store-name { font-size: 1rem; font-weight: 700; }
+    .dl-visual { position: relative; display: flex; justify-content: center; }
+    .phones-stack { position: relative; height: 480px; }
+    .phone-back {
+      position: absolute; width: 200px; top: 40px; right: 0;
+      background: var(--orange-dark); border-radius: 28px; height: 420px;
+      box-shadow: var(--shadow-lg); opacity: .4; transform: rotate(6deg);
+    }
+    .phone-front {
+      position: absolute; width: 220px; top: 0; left: 20px;
+      background: var(--black); border-radius: 32px; padding: 10px;
+      box-shadow: var(--shadow-lg); z-index: 1; transform: rotate(-4deg);
+    }
+    .pf-screen {
+      background: var(--grey50); border-radius: 24px; height: 440px;
+      overflow: hidden; padding: 1.25rem; display: flex; flex-direction: column; gap: .75rem;
+    }
+    .pf-map-area {
+      flex: 1; background: linear-gradient(160deg, var(--orange), var(--orange-dark));
+      border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; position: relative; overflow: hidden;
+    }
+    .pf-map-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .pf-bottom { display: flex; flex-direction: column; gap: .5rem; }
+    .pf-trip-label { font-size: .65rem; font-weight: 700; color: var(--grey500); text-transform: uppercase; letter-spacing: .08em; }
+    .pf-trip-name { font-size: .9rem; font-weight: 700; color: var(--grey900); }
+    .pf-progress { height: 6px; background: var(--grey200); border-radius: 3px; overflow: hidden; }
+    .pf-progress-bar { height: 100%; width: 65%; background: linear-gradient(90deg, var(--orange), var(--orange-dark)); border-radius: 3px; }
+
+    /* ── Contact ── */
+    #contact { padding: 6rem 0; background: var(--white); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start; }
+    .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+    .contact-info .section-sub { margin-bottom: .5rem; }
+    .contact-methods { display: flex; flex-direction: column; gap: 1.25rem; }
+    .contact-method {
+      display: flex; align-items: flex-start; gap: 1rem; padding: 1.25rem;
+      background: var(--grey50); border-radius: 16px;
+      border: 1px solid var(--grey200); transition: border-color .2s, box-shadow .2s;
+    }
+    .contact-method:hover { border-color: var(--orange); box-shadow: 0 4px 16px rgba(249,115,22,.10); }
+    .cm-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .cm2 .cm-icon { background: linear-gradient(135deg, #1a1a1a, #3f3f3f); }
+    .cm-label { font-size: .75rem; font-weight: 600; color: var(--grey500); text-transform: uppercase; letter-spacing: .08em; }
+    .cm-value { font-size: .95rem; font-weight: 700; color: var(--grey900); }
+    .cm-sub { font-size: .8rem; color: var(--grey500); }
+    .contact-social { display: flex; gap: .75rem; margin-top: .5rem; }
+    .social-link {
+      width: 40px; height: 40px; border-radius: 10px; border: 1.5px solid var(--grey200);
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+      transition: all .2s; cursor: pointer;
+    }
+    .social-link:hover { border-color: var(--orange); background: var(--orange); color: var(--white); }
+    .social-link svg { display: block; transition: fill .2s; }
+    .social-link:hover svg { fill: white; }
+
+    /* Contact Form */
+    .contact-form {
+      background: var(--grey50); border-radius: 24px; padding: 2.5rem;
+      border: 1px solid var(--grey200);
+    }
+    .form-title { font-size: 1.3rem; font-weight: 700; color: var(--grey900); margin-bottom: 1.75rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1rem; }
+    .form-label { font-size: .8rem; font-weight: 600; color: var(--grey700); }
+    .form-input, .form-select, .form-textarea {
+      padding: .8rem 1rem; border: 1.5px solid var(--grey200);
+      border-radius: 12px; font-family: 'Quicksand', sans-serif; font-size: .9rem;
+      color: var(--grey900); background: var(--white); outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(249,115,22,.10);
+    }
+    .form-textarea { resize: vertical; min-height: 120px; }
+    .form-select { appearance: none; cursor: pointer; }
+    .form-submit {
+      width: 100%; padding: 1rem; border-radius: 12px; border: none;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      color: var(--white); font-family: 'Quicksand', sans-serif; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all .25s; margin-top: .5rem;
+    }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(249,115,22,.35); }
+    .form-note { text-align: center; font-size: .75rem; color: var(--grey500); margin-top: .75rem; }
+
+    /* ── Newsletter ── */
+    #newsletter {
+      padding: 5rem 0;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+    }
+    .nl-inner { text-align: center; max-width: 560px; margin: 0 auto; }
+    .nl-inner .section-label { color: rgba(255,255,255,.7); }
+    .nl-inner .section-title { color: var(--white); margin-bottom: 1rem; }
+    .nl-inner p { color: rgba(255,255,255,.8); margin-bottom: 2rem; }
+    .nl-form { display: flex; gap: .75rem; max-width: 460px; margin: 0 auto; }
+    .nl-input {
+      flex: 1; padding: .85rem 1.25rem; border-radius: 12px; border: none;
+      font-family: 'Quicksand', sans-serif; font-size: .9rem; outline: none;
+    }
+    .nl-btn {
+      background: var(--black); color: var(--white); border: none; border-radius: 12px;
+      padding: .85rem 1.5rem; font-family: 'Quicksand', sans-serif; font-size: .9rem; font-weight: 700;
+      cursor: pointer; white-space: nowrap; transition: all .25s;
+    }
+    .nl-btn:hover { background: var(--black-soft); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--black); color: rgba(255,255,255,.60);
+      padding: 4rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 3rem;
+    }
+    .footer-brand .nav-logo { font-size: 1.8rem; margin-bottom: 1rem; }
+    .footer-brand p { font-size: .9rem; line-height: 1.7; margin-bottom: 1.5rem; }
+    .footer-col-title {
+      font-size: .8rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--white); margin-bottom: 1.25rem;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: .75rem; }
+    .footer-links a {
+      font-size: .9rem; color: rgba(255,255,255,.50); transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--orange); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08); padding-top: 2rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p { font-size: .85rem; }
+    .footer-legal { display: flex; gap: 1.5rem; }
+    .footer-legal a { font-size: .85rem; color: rgba(255,255,255,.38); transition: color .2s; }
+    .footer-legal a:hover { color: var(--white); }
+
+    /* ── Mobile Nav Drawer ── */
+    .nav-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; width: 280px;
+      background: var(--white); box-shadow: -4px 0 32px rgba(0,0,0,.18);
+      transform: translateX(100%); transition: transform .35s ease;
+      z-index: 1000; padding: 2rem 1.5rem; display: flex; flex-direction: column; gap: 1.5rem;
+    }
+    .nav-drawer.open { transform: translateX(0); }
+    .drawer-close {
+      align-self: flex-end; background: none; border: none; font-size: 1.5rem;
+      cursor: pointer; color: var(--grey700);
+    }
+    .drawer-logo {
+      display: flex; align-items: center; gap: .5rem;
+      font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 800;
+      color: var(--black);
+    }
+    .drawer-logo span { color: var(--orange); }
+    .drawer-logo img { height: 32px; width: auto; }
+    .drawer-links { display: flex; flex-direction: column; gap: 1rem; }
+    .drawer-links a {
+      font-size: 1rem; font-weight: 600; color: var(--grey700);
+      padding: .5rem 0; border-bottom: 1px solid var(--grey100);
+    }
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 998;
+      opacity: 0; pointer-events: none; transition: opacity .35s;
+    }
+    .overlay.show { opacity: 1; pointer-events: all; }
+
+    /* ── Fade-in animation ── */
+    .fade-up {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .dest-grid { grid-template-columns: 1fr 1fr; }
+      .dest-card.large { grid-row: span 1; height: 320px; }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid::before { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .hero-content { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; }
+      .hero-sub { max-width: 100%; }
+      .hero-actions { justify-content: center; }
+      .hero-stats { justify-content: center; }
+      .hero-right { order: -1; }
+      .phone-wrap { width: 220px; }
+      .fb1, .fb2 { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-visual { order: -1; }
+      .dl-inner { grid-template-columns: 1fr; }
+      .dl-visual { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .dest-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .nl-form { flex-direction: column; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero-stats { flex-direction: column; gap: 1rem; }
+      .hero-actions { flex-direction: column; }
+      .store-btns { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══════════════════════════════════════════════ -->
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="LOGO.png" alt="Travela logo" style="height:38px;width:auto;flex-shrink:0;" />
+          <span class="logo-name">Travel<span class="logo-accent">a</span></span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#destinations">Destinations</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="#download" class="btn btn-primary">Get the App</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="overlay" id="overlay"></div>
+  <div class="nav-drawer" id="navDrawer">
+    <button class="drawer-close" id="drawerClose">✕</button>
+    <div class="drawer-logo">
+      <img src="LOGO.png" alt="Travela logo" style="height:32px;width:auto;flex-shrink:0;" />
+      <span class="logo-name" style="color:var(--black);">Travel<span class="logo-accent">a</span></span>
+    </div>
+    <div class="drawer-links">
+      <a href="#destinations">Destinations</a>
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#download" class="btn btn-primary" style="justify-content:center">Get the App</a>
+  </div>
+
+  <!-- ══ HERO ═════════════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-shapes">
+      <div class="hero-shape hs1"></div>
+      <div class="hero-shape hs2"></div>
+      <div class="hero-shape hs3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-badge"><span class="dot"></span> Meet Locals. Travel Authentically.</div>
+        <h1 class="hero-title">
+          Travel Beyond<br>the <em>Tourist</em> Trail
+        </h1>
+        <p class="hero-sub">
+          Travela connects travellers with real locals who open the door to hidden gems, cultural experiences, and genuine friendships — no tourist traps, ever.
+        </p>
+        <div class="hero-actions">
+          <a href="#download" class="btn btn-primary">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.39-1.32 2.76-2.53 3.99M12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+            App Store
+          </a>
+          <a href="#download" class="btn btn-outline">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M3.18 23.76c.32.18.68.22 1.02.12l12.44-7.19-2.58-2.58-10.88 9.65zM.5 1.32C.19 1.67 0 2.2 0 2.91v18.18c0 .71.19 1.24.5 1.59l.08.08L11.06 12v-.18L.58 1.24.5 1.32zM20.62 10.57l-2.8-1.62-2.9 2.9 2.9 2.9 2.82-1.63c.81-.47.81-1.23-.02-1.55zM4.2.12L16.64 7.3l-2.58 2.58L3.18.24C3.54.08 3.9.02 4.2.12z"/></svg>
+            Google Play
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">🌍</div>
+            <div class="stat-label">Open Globally</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="phone-wrap">
+          <div class="floating-badge fb1"><span class="fb-icon">🤝</span> Local matched!</div>
+          <div class="floating-badge fb2"><span class="fb-icon">📍</span> Bali, Indonesia</div>
+          <div class="phone-shell">
+            <div class="phone-orb"></div>
+            <div class="phone-screen">
+              <div class="phone-map">
+                <div class="map-grid"></div>
+                <div class="map-pin pin1">
+                  <div class="map-pin-dot">
+                    <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  </div>
+                </div>
+                <div class="map-pin pin2">
+                  <div class="map-pin-dot" style="background:#111111;">
+                    <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="phone-bottom">
+                <div class="phone-card">
+                  <div class="phone-card-title">Matched with Ayu 🌸</div>
+                  <div class="phone-card-sub">Bali Local · Food & Culture Guide</div>
+                  <div class="phone-card-row">
+                    <span style="font-size:.75rem;color:var(--grey500);">⭐ 4.9 · Meet today</span>
+                    <span class="pill-match">New Match</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ DESTINATIONS ══════════════════════════════════════ -->
+  <section id="destinations">
+    <div class="container">
+      <div class="dest-header fade-up">
+        <div class="section-label">Explore With Locals</div>
+        <h2 class="section-title">Where Will You Connect Next?</h2>
+        <p class="section-sub">From tropical islands to historic cities — find a local who calls it home and experience it the way they do.</p>
+      </div>
+      <div class="dest-grid">
+        <div class="dest-card large fade-up">
+          <div class="dest-img bg-bali"><div class="dest-art">🏝️</div></div>
+          <div class="dest-overlay"></div>
+          <div class="dest-info">
+            <div class="dest-country">Indonesia</div>
+            <div class="dest-name">Bali</div>
+            <div class="dest-meta">
+              <span class="dest-rating">🤝 Locals available</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card fade-up">
+          <div class="dest-img bg-paris"><div class="dest-art">🗼</div></div>
+          <div class="dest-overlay"></div>
+          <div class="dest-info">
+            <div class="dest-country">France</div>
+            <div class="dest-name">Paris</div>
+            <div class="dest-meta">
+              <span class="dest-rating">🤝 Locals available</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card fade-up">
+          <div class="dest-img bg-tokyo"><div class="dest-art">⛩️</div></div>
+          <div class="dest-overlay"></div>
+          <div class="dest-info">
+            <div class="dest-country">Japan</div>
+            <div class="dest-name">Tokyo</div>
+            <div class="dest-meta">
+              <span class="dest-rating">🤝 Locals available</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card fade-up">
+          <div class="dest-img bg-maldives"><div class="dest-art">🤿</div></div>
+          <div class="dest-overlay"></div>
+          <div class="dest-info">
+            <div class="dest-country">Maldives</div>
+            <div class="dest-name">Malé Atoll</div>
+            <div class="dest-meta">
+              <span class="dest-rating">🤝 Locals available</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card fade-up">
+          <div class="dest-img bg-rome"><div class="dest-art">🏛️</div></div>
+          <div class="dest-overlay"></div>
+          <div class="dest-info">
+            <div class="dest-country">Italy</div>
+            <div class="dest-name">Rome</div>
+            <div class="dest-meta">
+              <span class="dest-rating">🤝 Locals available</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FEATURES ══════════════════════════════════════════ -->
+  <section id="features">
+    <div class="container">
+      <div class="features-grid">
+        <div>
+          <div class="fade-up">
+            <div class="section-label">Why Travela</div>
+            <h2 class="section-title">Everything You Need for Authentic Travel</h2>
+            <p class="section-sub">Built for curious explorers — Travela bridges the gap between travellers and locals worldwide.</p>
+          </div>
+          <div class="feature-list">
+            <div class="feature-item active fade-up">
+              <div class="feature-icon">🤝</div>
+              <div>
+                <div class="feature-text-title">Smart Local Matching</div>
+                <div class="feature-text-desc">Our algorithm matches you with verified locals who share your interests, travel style, and curiosity.</div>
+              </div>
+            </div>
+            <div class="feature-item fade-up">
+              <div class="feature-icon">✨</div>
+              <div>
+                <div class="feature-text-title">Authentic Experiences</div>
+                <div class="feature-text-desc">Discover hidden restaurants, secret viewpoints, and off-the-beaten-path adventures only locals know about.</div>
+              </div>
+            </div>
+            <div class="feature-item fade-up">
+              <div class="feature-icon">💬</div>
+              <div>
+                <div class="feature-text-title">In-App Messaging</div>
+                <div class="feature-text-desc">Chat safely with your local match before you meet — plan your experience with complete confidence.</div>
+              </div>
+            </div>
+            <div class="feature-item fade-up">
+              <div class="feature-icon">🛡️</div>
+              <div>
+                <div class="feature-text-title">Verified & Safe</div>
+                <div class="feature-text-desc">Every local profile is verified with ID checks, reviews, and a community trust score so you always feel secure.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-visual fade-up">
+          <div class="feature-phone">
+            <div class="feature-screen">
+              <div class="app-header-bar">
+                <div>
+                  <div class="app-greeting">Good morning,</div>
+                  <div class="app-username">Alex 🌍</div>
+                </div>
+                <div class="app-avatar">👤</div>
+              </div>
+              <div class="search-bar">
+                <span>🔍</span>
+                <span>Find a local in…</span>
+              </div>
+              <div style="font-size:.65rem;font-weight:700;color:var(--grey500);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;">Your Matches</div>
+              <div class="mini-card">
+                <div class="mini-card-row">
+                  <div class="mini-thumb mini-thumb-1">🌸</div>
+                  <div class="mini-info">
+                    <div class="mini-name">Ayu · Bali, Indonesia</div>
+                    <div class="mini-date">Food, Culture & Hidden Temples</div>
+                  </div>
+                  <div class="mini-tag">New</div>
+                </div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-card-row">
+                  <div class="mini-thumb mini-thumb-2">🎌</div>
+                  <div class="mini-info">
+                    <div class="mini-name">Kenji · Tokyo, Japan</div>
+                    <div class="mini-date">Street Food & Nightlife</div>
+                  </div>
+                  <div class="mini-tag">⭐ 4.9</div>
+                </div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-card-row">
+                  <div class="mini-thumb mini-thumb-3">🍕</div>
+                  <div class="mini-info">
+                    <div class="mini-name">Marco · Rome, Italy</div>
+                    <div class="mini-date">History, Art & Local Cuisine</div>
+                  </div>
+                  <div class="mini-tag">⭐ 5.0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="feature-tag ft1">🤝 Local matched!</div>
+          <div class="feature-tag ft2">⭐ Verified profile</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ HOW IT WORKS ══════════════════════════════════════ -->
+  <section id="how-it-works">
+    <div class="container">
+      <div class="hiw-header fade-up">
+        <div class="section-label">Simple Process</div>
+        <h2 class="section-title">Meet a Local in 4 Simple Steps</h2>
+        <p class="section-sub">From curiosity to connection — Travela guides you every step of the way.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card fade-up">
+          <div class="step-num-wrap">👤</div>
+          <div class="step-title">Create Your Profile</div>
+          <p class="step-desc">Tell us your travel style, interests, and upcoming destinations so we can find your perfect local match.</p>
+        </div>
+        <div class="step-card fade-up">
+          <div class="step-num-wrap">🔍</div>
+          <div class="step-title">Discover Locals</div>
+          <p class="step-desc">Browse verified local profiles in your destination. Filter by interests, languages, and experience type.</p>
+        </div>
+        <div class="step-card fade-up">
+          <div class="step-num-wrap">💬</div>
+          <div class="step-title">Connect & Chat</div>
+          <p class="step-desc">Match with a local you vibe with and plan your experience together through secure in-app messaging.</p>
+        </div>
+        <div class="step-card fade-up">
+          <div class="step-num-wrap">🌍</div>
+          <div class="step-title">Meet & Explore</div>
+          <p class="step-desc">Meet up and discover the destination through a local's eyes — the real version no guidebook ever captures.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ APP DOWNLOAD ══════════════════════════════════════ -->
+  <section id="download">
+    <div class="container">
+      <div class="dl-inner">
+        <div class="dl-text fade-up">
+          <div class="section-label">Download Now</div>
+          <h2 class="section-title">Start Your Authentic Journey</h2>
+          <p class="section-sub">Join travellers worldwide who are ditching tourist traps and connecting with real locals through Travela. Free to download — always.</p>
+          <div class="store-btns">
+            <div class="store-btn">
+              <!-- Apple logo -->
+              <svg class="store-icon-svg" width="28" height="28" fill="white" viewBox="0 0 24 24">
+                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.39-1.32 2.76-2.53 3.99M12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+              </svg>
+              <div>
+                <div class="store-label">Download on the</div>
+                <div class="store-name">App Store</div>
+              </div>
+            </div>
+            <div class="store-btn">
+              <!-- Google Play logo -->
+              <svg class="store-icon-svg" width="28" height="28" fill="white" viewBox="0 0 24 24">
+                <path d="M3.18 23.76c.32.18.68.22 1.02.12l12.44-7.19-2.58-2.58-10.88 9.65zM.5 1.32C.19 1.67 0 2.2 0 2.91v18.18c0 .71.19 1.24.5 1.59l.08.08L11.06 12v-.18L.58 1.24.5 1.32zM20.62 10.57l-2.8-1.62-2.9 2.9 2.9 2.9 2.82-1.63c.81-.47.81-1.23-.02-1.55zM4.2.12L16.64 7.3l-2.58 2.58L3.18.24C3.54.08 3.9.02 4.2.12z"/>
+              </svg>
+              <div>
+                <div class="store-label">Get it on</div>
+                <div class="store-name">Google Play</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dl-visual">
+          <div class="phones-stack">
+            <div class="phone-back"></div>
+            <div class="phone-front">
+              <div class="pf-screen">
+                <div class="pf-map-area">
+                  <div class="pf-map-grid"></div>
+                  <span style="position:relative;z-index:1;font-size:3rem;">🤝</span>
+                </div>
+                <div class="pf-bottom">
+                  <div class="pf-trip-label">Active Match</div>
+                  <div class="pf-trip-name">Ayu · Bali, Indonesia 🌸</div>
+                  <div style="font-size:.65rem;color:var(--grey500);margin-bottom:.25rem;">Food & Culture · Meeting at 3 PM</div>
+                  <div class="pf-progress"><div class="pf-progress-bar"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT ════════════════════════════════════════════ -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info fade-up">
+          <div>
+            <div class="section-label">Get in Touch</div>
+            <h2 class="section-title">We'd Love to Hear from You</h2>
+            <p class="section-sub">Have a question, partnership idea, or just want to say hello? Our team is available 7 days a week.</p>
+          </div>
+          <div class="contact-methods">
+            <div class="contact-method cm1">
+              <div class="cm-icon">📧</div>
+              <div>
+                <div class="cm-label">Email Us</div>
+                <div class="cm-value">travelatheworld1123@gmail.com</div>
+                <div class="cm-sub">We reply within 24 hours</div>
+              </div>
+            </div>
+            <div class="contact-method cm2">
+              <div class="cm-icon">📞</div>
+              <div>
+                <div class="cm-label">Call Us</div>
+                <div class="cm-value">+65 6123 4567</div>
+                <div class="cm-sub">Mon–Fri, 9 AM – 6 PM SGT</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:.8rem;font-weight:700;color:var(--grey700);margin-bottom:.75rem;">Follow Our Journey</div>
+            <div class="contact-social">
+              <div class="social-link" title="TikTok">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="#64748b"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.67a8.18 8.18 0 0 0 4.83 1.55V6.78a4.85 4.85 0 0 1-1.06-.09z"/></svg>
+              </div>
+              <div class="social-link" title="Instagram">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="#64748b"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form fade-up">
+          <div class="form-title">Send us a Message</div>
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input class="form-input" type="text" placeholder="Alex" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input class="form-input" type="text" placeholder="Rivera" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input class="form-input" type="email" placeholder="alex@example.com" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Topic</label>
+              <select class="form-select form-input">
+                <option value="">Select a topic…</option>
+                <option>General Enquiry</option>
+                <option>Partnership &amp; Press</option>
+                <option>Become a Local Host</option>
+                <option>Technical Support</option>
+                <option>Feature Request</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea class="form-textarea" placeholder="Tell us how we can help…" required></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send Message →</button>
+            <div class="form-note">🔒 Your information is never shared with third parties.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ NEWSLETTER ═════════════════════════════════════════ -->
+  <section id="newsletter">
+    <div class="container">
+      <div class="nl-inner fade-up">
+        <div class="section-label">Stay in the Loop</div>
+        <h2 class="section-title">Get Insider Travel Stories</h2>
+        <p>Weekly spotlights on local experiences, traveller stories, and destination guides from people who actually live there.</p>
+        <form class="nl-form" id="newsletterForm">
+          <input class="nl-input" type="email" placeholder="your@email.com" required />
+          <button type="submit" class="nl-btn">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="margin-bottom:1rem;">
+            <img src="LOGO.png" alt="Travela logo" style="height:40px;width:auto;flex-shrink:0;" />
+            <span class="logo-name" style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:800;color:var(--white);">Travel<span class="logo-accent">a</span></span>
+          </div>
+          <p>Travela connects curious travellers with locals across the world, bridging the gap between tourism and authentic human connection.</p>
+          <div class="contact-social">
+            <div class="social-link" style="border-color:rgba(255,255,255,.12);" title="TikTok">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="rgba(255,255,255,0.55)"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.67a8.18 8.18 0 0 0 4.83 1.55V6.78a4.85 4.85 0 0 1-1.06-.09z"/></svg>
+            </div>
+            <div class="social-link" style="border-color:rgba(255,255,255,.12);" title="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="rgba(255,255,255,0.55)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Product</div>
+          <ul class="footer-links">
+            <li><a href="#destinations">Destinations</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#download">Download App</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Company</div>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press Kit</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Support</div>
+          <ul class="footer-links">
+            <li><a href="#">Help Centre</a></li>
+            <li><a href="#">Safety Tips</a></li>
+            <li><a href="#">Community Guidelines</a></li>
+            <li><a href="#">Become a Local</a></li>
+            <li><a href="#">Partner With Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Travela Pte. Ltd. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Settings</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    const hamburger = document.getElementById('hamburger');
+    const navDrawer = document.getElementById('navDrawer');
+    const overlay   = document.getElementById('overlay');
+    const drawerClose = document.getElementById('drawerClose');
+
+    function openDrawer()  { navDrawer.classList.add('open');  overlay.classList.add('show');  }
+    function closeDrawer() { navDrawer.classList.remove('open'); overlay.classList.remove('show'); }
+
+    hamburger.addEventListener('click', openDrawer);
+    drawerClose.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+    navDrawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const delay = e.target.dataset.delay || 0;
+          setTimeout(() => e.target.classList.add('visible'), delay * 120);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    fadeEls.forEach((el, i) => { el.dataset.delay = i % 6; observer.observe(el); });
+
+    const featureItems = document.querySelectorAll('.feature-item');
+    featureItems.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        featureItems.forEach(f => f.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.textContent = '✓ Message Sent!';
+      btn.style.background = 'linear-gradient(135deg, #111111, #1a1a1a)';
+      setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; e.target.reset(); }, 3000);
+    });
+
+    document.getElementById('newsletterForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('.nl-btn');
+      btn.textContent = '✓ Subscribed!';
+      setTimeout(() => { btn.textContent = 'Subscribe'; e.target.reset(); }, 3000);
+    });
+  </script>
+</body>
+</html>
